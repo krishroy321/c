@@ -501,7 +501,6 @@
         </main>
     </div>
 
-<<<<<<< HEAD
     <!-- Firebase SDKs and initialization -->
     <!-- Firebase App (core) -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -509,7 +508,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
     <!-- Firebase Firestore -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-=======
     <div id="avatarOptions" class="avatar-modal">
         <div class="avatar-modal-content">
             <h3>Change Profile Picture</h3>
@@ -526,7 +524,6 @@
     </div>
     <input type="file" id="avatarUpload" accept="image/*" style="display:none;">
 
->>>>>>> refs/remotes/origin/master
     <script>
       // Your web app's Firebase configuration
       const firebaseConfig = {
@@ -539,12 +536,6 @@
         measurementId: "G-BLNN73G7VK"
       };
 
-<<<<<<< HEAD
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const auth = firebase.auth();
-      const db = firebase.firestore();
-=======
         document.addEventListener('DOMContentLoaded', function() {
             const userData = JSON.parse(localStorage.getItem('user') || '{}');
             const userAvatar = document.getElementById('userAvatar');
@@ -620,7 +611,6 @@
                 }
             });
         });
->>>>>>> refs/remotes/origin/master
     </script>
 </body> // After successful login (replace with your actual login logic)
 </html> const userName = document.getElementById('login-name').value; // or get from server response
@@ -630,3 +620,12 @@
     </script>
 </body>
 </html>
+<script>
+    // Social buttons (demo alerts)
+    document.querySelectorAll('.social-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const provider = this.classList.contains('facebook') ? 'Facebook' : 'Google';
+            alert(`Login with ${provider} (Demo - integrate OAuth in real app)`);
+        });
+    });
+</script>
