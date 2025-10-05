@@ -318,6 +318,103 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Avatar Modal */
+        .avatar-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .avatar-modal-content {
+            background: #fff;
+            padding: 32px 36px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 280px;
+            animation: popIn 0.4s;
+        }
+        
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .avatar-preview {
+            margin: 18px 0 24px 0;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .avatar-preview img,
+        .avatar-letter {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #f0f0f0;
+            font-size: 2.5rem;
+            color: #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .avatar-actions {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .avatar-btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            background: #eee;
+            color: #222;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .avatar-btn.primary {
+            background: #007bff;
+            color: #fff;
+        }
+        
+        .avatar-btn.close {
+            background: #f5f5f5;
+            color: #888;
+            margin-top: 8px;
+        }
+        
+        .avatar-btn:hover {
+            background: #d4e3fa;
+        }
     </style>
 </head>
 <body>
@@ -346,7 +443,9 @@
             <header class="header">
                 <img src="https://seeklogo.com/images/F/fit-life-logo-B9A7A4B092-seeklogo.com.png" alt="FitLife Logo" style="height: 48px;">
                 <div class="user-profile">
-                    <div class="user-avatar" id="userAvatar">JD</div>
+                    <div id="userAvatar" style="width:40px;height:40px;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.5rem;">J</div>
+                    <img id="profilePic" src="" alt="Profile Picture" style="display:none;width:40px;height:40px;border-radius:50%;cursor:pointer;">
+                    <input type="file" id="avatarUpload" accept="image/*" style="display:none;">
                     <div class="user-info">
                         <h4 id="userName">John Doe</h4>
                         <p>Member since 2024</p>
@@ -402,6 +501,7 @@
         </main>
     </div>
 
+<<<<<<< HEAD
     <!-- Firebase SDKs and initialization -->
     <!-- Firebase App (core) -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -409,6 +509,24 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
     <!-- Firebase Firestore -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+=======
+    <div id="avatarOptions" class="avatar-modal">
+        <div class="avatar-modal-content">
+            <h3>Change Profile Picture</h3>
+            <div class="avatar-preview">
+                <img id="avatarPreviewImg" src="" alt="Preview" style="display:none;">
+                <div id="avatarPreviewLetter" class="avatar-letter"></div>
+            </div>
+            <div class="avatar-actions">
+                <button id="addPicBtn" class="avatar-btn primary"><i class="fas fa-upload"></i> Upload New</button>
+                <button id="setDefaultBtn" class="avatar-btn"><i class="fas fa-user"></i> Use Default</button>
+            </div>
+            <button id="closeAvatarOptions" class="avatar-btn close">Cancel</button>
+        </div>
+    </div>
+    <input type="file" id="avatarUpload" accept="image/*" style="display:none;">
+
+>>>>>>> refs/remotes/origin/master
     <script>
       // Your web app's Firebase configuration
       const firebaseConfig = {
@@ -421,10 +539,94 @@
         measurementId: "G-BLNN73G7VK"
       };
 
+<<<<<<< HEAD
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       const auth = firebase.auth();
       const db = firebase.firestore();
+=======
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('user') || '{}');
+            const userAvatar = document.getElementById('userAvatar');
+            const profilePic = document.getElementById('profilePic');
+            const avatarUpload = document.getElementById('avatarUpload');
+            const avatarOptions = document.getElementById('avatarOptions');
+            const setDefaultBtn = document.getElementById('setDefaultBtn');
+            const addPicBtn = document.getElementById('addPicBtn');
+            const closeAvatarOptions = document.getElementById('closeAvatarOptions');
+            const avatarPreviewImg = document.getElementById('avatarPreviewImg');
+            const avatarPreviewLetter = document.getElementById('avatarPreviewLetter');
+
+            function updateAvatar() {
+                if (userData.profilePic) {
+                    profilePic.src = userData.profilePic;
+                    profilePic.style.display = 'inline-block';
+                    userAvatar.style.display = 'none';
+                } else {
+                    userAvatar.textContent = userData.name ? userData.name.charAt(0).toUpperCase() : 'J';
+                    userAvatar.style.display = 'flex';
+                    profilePic.style.display = 'none';
+                }
+                document.getElementById('userName').textContent = userData.name || 'John Doe';
+            }
+            updateAvatar();
+
+            // Show modal with preview
+            function showAvatarOptions() {
+                if (userData.profilePic) {
+                    avatarPreviewImg.src = userData.profilePic;
+                    avatarPreviewImg.style.display = 'block';
+                    avatarPreviewLetter.style.display = 'none';
+                } else {
+                    avatarPreviewLetter.textContent = userData.name ? userData.name.charAt(0).toUpperCase() : 'J';
+                    avatarPreviewLetter.style.display = 'flex';
+                    avatarPreviewImg.style.display = 'none';
+                }
+                avatarOptions.style.display = 'flex';
+            }
+            userAvatar.addEventListener('click', showAvatarOptions);
+            profilePic.addEventListener('click', showAvatarOptions);
+
+            // Set Default button
+            setDefaultBtn.addEventListener('click', function() {
+                delete userData.profilePic;
+                localStorage.setItem('user', JSON.stringify(userData));
+                updateAvatar();
+                avatarOptions.style.display = 'none';
+            });
+
+            // Add Profile Pic button
+            addPicBtn.addEventListener('click', function() {
+                avatarUpload.click();
+            });
+
+            // Cancel button
+            closeAvatarOptions.addEventListener('click', function() {
+                avatarOptions.style.display = 'none';
+            });
+
+            // Handle profile picture upload with preview
+            avatarUpload.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        userData.profilePic = evt.target.result;
+                        localStorage.setItem('user', JSON.stringify(userData));
+                        updateAvatar();
+                        avatarOptions.style.display = 'none';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+>>>>>>> refs/remotes/origin/master
+    </script>
+</body> // After successful login (replace with your actual login logic)
+</html> const userName = document.getElementById('login-name').value; // or get from server response
+        const userData = { name: userName };
+        localStorage.setItem('user', JSON.stringify(userData));
+        window.location.href = 'dashboard.html';
     </script>
 </body>
 </html>
