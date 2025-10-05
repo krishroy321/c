@@ -142,6 +142,7 @@ body {
 </style>
 </head>
 <body>
+<<<<<<< HEAD
 <div class="dashboard-container">
 <nav class="sidebar">
   <div class="sidebar-header"><h3>FitLife Menu</h3></div>
@@ -153,6 +154,104 @@ body {
     <li class="nav-item" data-section="profile"><i class="fas fa-user"></i> Profile</li>
   </ul>
 </nav>
+=======
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>FitLife Menu</h3>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active"><i class="fas fa-tachometer-alt"></i> Dashboard</li>
+                <li class="nav-item"><i class="fas fa-dumbbell"></i> Workouts</li>
+                <li class="nav-item"><i class="fas fa-apple-alt"></i> Nutrition</li>
+                <li class="nav-item"><i class="fas fa-chart-line"></i> Progress</li>
+                <li class="nav-item"><i class="fas fa-user"></i> Profile</li>
+            </ul>
+        </nav>
+        
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <button class="mobile-menu-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <!-- Header -->
+            <header class="header">
+                <img src="https://seeklogo.com/images/F/fit-life-logo-B9A7A4B092-seeklogo.com.png" alt="FitLife Logo" style="height: 48px;">
+                <div class="user-profile">
+                    <div id="userAvatar" style="width:40px;height:40px;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.5rem;">J</div>
+                    <img id="profilePic" src="" alt="Profile Picture" style="display:none;width:40px;height:40px;border-radius:50%;cursor:pointer;">
+                    <input type="file" id="avatarUpload" accept="image/*" style="display:none;">
+                    <div class="user-info">
+                        <h4 id="userName">John Doe</h4>
+                        <p>Member since 2024</p>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-dumbbell"></i></div>
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Workouts Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-fire"></i></div>
+                    <div class="stat-number">1,250</div>
+                    <div class="stat-label">Calories Burned</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                    <div class="stat-number">85%</div>
+                    <div class="stat-label">Goal Progress</div>
+                </div>
+            </div>
+            
+            <!-- Recent Workouts (Added back for completeness) -->
+            <section class="workouts-section" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 16px; padding: 30px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); margin-bottom: 30px; animation: fadeInUp 0.8s ease forwards 0.4s;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="color: var(--primary); font-size: 1.5rem; font-weight: 700;">Recent Workouts</h2>
+                    <a href="#" style="color: var(--secondary); text-decoration: none; font-weight: 500;">View All</a>
+                </div>
+                <ul style="list-style: none;">
+                    <li style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--gray-light);">
+                        <div>
+                            <h4 style="color: var(--dark); margin-bottom: 5px;">Full Body Strength</h4>
+                            <div style="color: #888; font-size: 0.9rem;">Yesterday • 45 min</div>
+                        </div>
+                        <div style="color: var(--accent); font-weight: 600;">Completed</div>
+                    </li>
+                    <li style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--gray-light);">
+                        <div>
+                            <h4 style="color: var(--dark); margin-bottom: 5px;">Cardio Run</h4>
+                            <div style="color: #888; font-size: 0.9rem;">2 days ago • 30 min</div>
+                        </div>
+                        <div style="color: var(--accent); font-weight: 600;">Completed</div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Action Buttons (Newly Added) -->
+            <div style="margin-bottom: 30px;">
+                <button id="exerciseDoneBtn" style="padding: 10px 20px; border: none; border-radius: 8px; background: var(--accent); color: white; font-size: 1rem; cursor: pointer; transition: background 0.3s;">
+                    <i class="fas fa-check"></i> Mark Exercise Done
+                </button>
+                <button id="dietDoneBtn" style="padding: 10px 20px; border: none; border-radius: 8px; background: var(--secondary); color: white; font-size: 1rem; cursor: pointer; transition: background 0.3s;">
+                    <i class="fas fa-utensils"></i> Mark Diet Done
+                </button>
+                <button id="resetStatusBtn" style="padding: 10px 20px; border: none; border-radius: 8px; background: #f44336; color: white; font-size: 1rem; cursor: pointer; transition: background 0.3s;">
+                    <i class="fas fa-redo"></i> Reset Status
+                </button>
+            </div>
+            <div id="statusDisplay" style="font-size: 1rem; color: #333;"></div>
+        </main>
+    </div>
+>>>>>>> 27e67e1e7440467adf164e06ae49bd24f0200a43
 
 <main class="main-content">
 <header class="header">
@@ -179,6 +278,45 @@ body {
 <div id="workouts" class="section"><h2>Workouts</h2>
 <div id="workoutList"></div>
 </div>
+        document.addEventListener('DOMContentLoaded', function() {
+            let userData = JSON.parse(localStorage.getItem('user') || '{}');
+
+            function updateStatusDisplay() {
+                document.getElementById('statusDisplay').innerHTML =
+                    `<strong>Exercise:</strong> ${userData.exerciseDone ? 'Done ✅' : 'Pending'}<br>
+                     <strong>Diet:</strong> ${userData.dietDone ? 'Done ✅' : 'Pending'}`;
+            }
+
+            document.getElementById('exerciseDoneBtn').onclick = function() {
+                userData.exerciseDone = true;
+                localStorage.setItem('user', JSON.stringify(userData));
+                updateStatusDisplay();
+            };
+
+            document.getElementById('dietDoneBtn').onclick = function() {
+                userData.dietDone = true;
+                localStorage.setItem('user', JSON.stringify(userData));
+                updateStatusDisplay();
+            };
+
+            document.getElementById('resetStatusBtn').onclick = function() {
+                userData.exerciseDone = false;
+                userData.dietDone = false;
+                localStorage.setItem('user', JSON.stringify(userData));
+                updateStatusDisplay();
+            };
+
+            updateStatusDisplay();
+
+            const userAvatar = document.getElementById('userAvatar');
+            const profilePic = document.getElementById('profilePic');
+            const avatarUpload = document.getElementById('avatarUpload');
+            const avatarOptions = document.getElementById('avatarOptions');
+            const setDefaultBtn = document.getElementById('setDefaultBtn');
+            const addPicBtn = document.getElementById('addPicBtn');
+            const closeAvatarOptions = document.getElementById('closeAvatarOptions');
+            const avatarPreviewImg = document.getElementById('avatarPreviewImg');
+            const avatarPreviewLetter = document.getElementById('avatarPreviewLetter');
 
 <div id="nutrition" class="section"><h2>Nutrition</h2><ul id="nutritionList">
 <li>Breakfast • 350 kcal</li>
@@ -210,6 +348,7 @@ navItems.forEach(item=>item.addEventListener('click',()=>{
 
 function logout(){alert("Logout clicked");}
 
+<<<<<<< HEAD
 // Workouts
 const workoutsData = [
   { name: "Full Body Strength", gif: "https://i.gifer.com/7efs.gif" },
@@ -322,5 +461,32 @@ function formatTime(sec) {
 
 renderWorkout(currentExercise);
 </script>
+=======
+            // Handle profile picture upload with preview
+            avatarUpload.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        userData.profilePic = evt.target.result;
+                        localStorage.setItem('user', JSON.stringify(userData));
+                        updateAvatar();
+                        avatarOptions.style.display = 'none';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        // Example: Set initial status on login
+        const userName = document.getElementById('login-name').value;
+        const userData = { 
+            name: userName,
+            exerciseDone: false,
+            dietDone: false
+        };
+        localStorage.setItem('user', JSON.stringify(userData));
+    </script>
+>>>>>>> 27e67e1e7440467adf164e06ae49bd24f0200a43
 </body>
 </html>
