@@ -281,10 +281,84 @@
                 padding: 30px;
             }
         }
+        
+        /* Splash Screen Styles */
+        #splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        .splash-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        
+        .splash-text {
+            font-size: 1.5rem;
+            color: white;
+            text-align: center;
+            max-width: 400px;
+        }
+        
+        .splash-left, .splash-right {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            transition: transform 1s ease;
+        }
+        
+        .splash-left {
+            left: 0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .splash-right {
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .splash-left.split {
+            transform: translateX(-100%);
+        }
+        
+        .splash-right.split {
+            transform: translateX(100%);
+        }
+        
+        .splash-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 1s cubic-bezier(.77,0,.18,1), opacity 0.7s;
+        }
+
+        .splash-content.slide-up {
+            transform: translateY(-120vh);
+            opacity: 0;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- Splash Screen -->
+    <div id="splash">
+        <div class="splash-content">
+            <img src="https://seeklogo.com/images/F/fit-life-logo-B9A7A4B092-seeklogo.com.png" alt="FitLife Logo" class="splash-logo">
+            <p class="splash-text">Get ready to transform your life with FitLife. Your journey to fitness starts here!</p>
+        </div>
+    </div>
+    
+    <div class="container" style="display:none;">
         <div class="welcome-section">
             <h1>Transform Your Life With FitLife</h1>
             <p>Join our community of fitness enthusiasts and start your journey to a healthier, stronger you.</p>
@@ -404,6 +478,15 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Splash animation
+            setTimeout(function() {
+                document.querySelector('.splash-content').classList.add('slide-up');
+                setTimeout(function() {
+                    document.getElementById('splash').style.display = 'none';
+                    document.querySelector('.container').style.display = 'flex';
+                }, 900); // Wait for slide-up animation
+            }, 1200); // Show splash for 1.2s
+
             const loginTab = document.getElementById('login-tab');
             const registerTab = document.getElementById('register-tab');
             const loginForm = document.getElementById('login-form');
@@ -454,6 +537,25 @@
                     alert(`Login with ${provider} (Demo - integrate OAuth in real app)`);
                 });
             });
+        });
+
+        // Example login form submission
+        document.getElementById('login-form').addEventListener('submit', async function(e) {
+          e.preventDefault();
+          const email = document.getElementById('login-email').value;
+          const password = document.getElementById('login-password').value;
+          const response = await fetch('http://localhost:3000/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+          const result = await response.json();
+          if (result.success) {
+            alert('Login successful!');
+            // Redirect or save user info
+          } else {
+            alert(result.message || 'Login failed');
+          }
         });
     </script>
 </body>
