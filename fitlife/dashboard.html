@@ -346,7 +346,9 @@
             <header class="header">
                 <img src="https://seeklogo.com/images/F/fit-life-logo-B9A7A4B092-seeklogo.com.png" alt="FitLife Logo" style="height: 48px;">
                 <div class="user-profile">
-                    <div class="user-avatar" id="userAvatar">JD</div>
+                    <div id="userAvatar" style="width:40px;height:40px;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.5rem;">J</div>
+                    <img id="profilePic" src="" alt="Profile Picture" style="display:none;width:40px;height:40px;border-radius:50%;cursor:pointer;">
+                    <input type="file" id="avatarUpload" accept="image/*" style="display:none;">
                     <div class="user-info">
                         <h4 id="userName">John Doe</h4>
                         <p>Member since 2024</p>
@@ -402,6 +404,15 @@
         </main>
     </div>
 
+    <div id="avatarOptions" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.3);align-items:center;justify-content:center;z-index:9999;">
+        <div style="background:#fff;padding:24px 32px;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.15);display:flex;flex-direction:column;gap:16px;min-width:220px;">
+            <button id="setDefaultBtn" style="padding:10px 0;font-size:1rem;border:none;background:#eee;border-radius:6px;cursor:pointer;">Set Default</button>
+            <button id="addPicBtn" style="padding:10px 0;font-size:1rem;border:none;background:#007bff;color:#fff;border-radius:6px;cursor:pointer;">Add Profile Pic</button>
+            <button id="closeAvatarOptions" style="padding:6px 0;font-size:0.9rem;border:none;background:#f5f5f5;border-radius:6px;cursor:pointer;">Cancel</button>
+        </div>
+    </div>
+    <input type="file" id="avatarUpload" accept="image/*" style="display:none;">
+
     <script>
         // Logout function
         function logout() {
@@ -410,41 +421,66 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if user is logged in (demo with localStorage)
             const userData = JSON.parse(localStorage.getItem('user') || '{}');
-            // Remove or comment out the redirect:
-            // if (!userData.name) {
-            //     window.location.href = 'login.html'; // Redirect to login if no user
-            //     return;
-            // }
-            
-            // Set user info (fallback to default if not found)
-            document.getElementById('userName').textContent = userData.name || 'John Doe';
-            document.getElementById('userAvatar').textContent = (userData.name ? userData.name.charAt(0).toUpperCase() : 'J');
-            
-            // Mobile menu toggle
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
-            const mobileToggle = document.getElementById('mobileToggle');
-            
-            mobileToggle.addEventListener('click', function() {
-                sidebar.classList.toggle('active');
-                mainContent.classList.toggle('shifted');
-            });
-            
-            // Close sidebar on window resize (desktop)
-            window.addEventListener('resize', function() {
-                if (window.innerWidth > 768) {
-                    sidebar.classList.remove('active');
-                    mainContent.classList.remove('shifted');
+            const userAvatar = document.getElementById('userAvatar');
+            const profilePic = document.getElementById('profilePic');
+            const avatarUpload = document.getElementById('avatarUpload');
+            const avatarOptions = document.getElementById('avatarOptions');
+            const setDefaultBtn = document.getElementById('setDefaultBtn');
+            const addPicBtn = document.getElementById('addPicBtn');
+            const closeAvatarOptions = document.getElementById('closeAvatarOptions');
+
+            function updateAvatar() {
+                if (userData.profilePic) {
+                    profilePic.src = userData.profilePic;
+                    profilePic.style.display = 'inline-block';
+                    userAvatar.style.display = 'none';
+                } else {
+                    userAvatar.textContent = userData.name ? userData.name.charAt(0).toUpperCase() : 'J';
+                    userAvatar.style.display = 'flex';
+                    profilePic.style.display = 'none';
                 }
+                document.getElementById('userName').textContent = userData.name || 'John Doe';
+            }
+            updateAvatar();
+
+            // Show options popup
+            function showAvatarOptions() {
+                avatarOptions.style.display = 'flex';
+            }
+            userAvatar.addEventListener('click', showAvatarOptions);
+            profilePic.addEventListener('click', showAvatarOptions);
+
+            // Set Default button
+            setDefaultBtn.addEventListener('click', function() {
+                delete userData.profilePic;
+                localStorage.setItem('user', JSON.stringify(userData));
+                updateAvatar();
+                avatarOptions.style.display = 'none';
             });
-            
-            // Close sidebar when clicking outside (mobile)
-            document.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768 && sidebar.classList.contains('active') && !sidebar.contains(e.target) && !mobileToggle.contains(e.target)) {
-                    sidebar.classList.remove('active');
-                    mainContent.classList.remove('shifted');
+
+            // Add Profile Pic button
+            addPicBtn.addEventListener('click', function() {
+                avatarUpload.click();
+                avatarOptions.style.display = 'none';
+            });
+
+            // Cancel button
+            closeAvatarOptions.addEventListener('click', function() {
+                avatarOptions.style.display = 'none';
+            });
+
+            // Handle profile picture upload
+            avatarUpload.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        userData.profilePic = evt.target.result;
+                        localStorage.setItem('user', JSON.stringify(userData));
+                        updateAvatar();
+                    };
+                    reader.readAsDataURL(file);
                 }
             });
         });
