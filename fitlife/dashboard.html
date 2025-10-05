@@ -621,11 +621,8 @@
 </body>
 </html>
 <script>
-    // Social buttons (demo alerts)
-    document.querySelectorAll('.social-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const provider = this.classList.contains('facebook') ? 'Facebook' : 'Google';
-            alert(`Login with ${provider} (Demo - integrate OAuth in real app)`);
-        });
-    });
+    // Social buttons
+document.querySelectorAll('.social-btn.google').forEach(btn => {
+  btn.addEventListener('click', handleGoogleSignIn);
+});
 </script>
