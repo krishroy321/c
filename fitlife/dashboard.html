@@ -498,6 +498,20 @@
                     </li>
                 </ul>
             </section>
+
+            <!-- Action Buttons (Newly Added) -->
+            <div style="margin-bottom: 30px;">
+                <button id="exerciseDoneBtn" style="padding: 10px 20px; border: none; border-radius: 8px; background: var(--accent); color: white; font-size: 1rem; cursor: pointer; transition: background 0.3s;">
+                    <i class="fas fa-check"></i> Mark Exercise Done
+                </button>
+                <button id="dietDoneBtn" style="padding: 10px 20px; border: none; border-radius: 8px; background: var(--secondary); color: white; font-size: 1rem; cursor: pointer; transition: background 0.3s;">
+                    <i class="fas fa-utensils"></i> Mark Diet Done
+                </button>
+                <button id="resetStatusBtn" style="padding: 10px 20px; border: none; border-radius: 8px; background: #f44336; color: white; font-size: 1rem; cursor: pointer; transition: background 0.3s;">
+                    <i class="fas fa-redo"></i> Reset Status
+                </button>
+            </div>
+            <div id="statusDisplay" style="font-size: 1rem; color: #333;"></div>
         </main>
     </div>
 
@@ -525,7 +539,35 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            const userData = JSON.parse(localStorage.getItem('user') || '{}');
+            let userData = JSON.parse(localStorage.getItem('user') || '{}');
+
+            function updateStatusDisplay() {
+                document.getElementById('statusDisplay').innerHTML =
+                    `<strong>Exercise:</strong> ${userData.exerciseDone ? 'Done ✅' : 'Pending'}<br>
+                     <strong>Diet:</strong> ${userData.dietDone ? 'Done ✅' : 'Pending'}`;
+            }
+
+            document.getElementById('exerciseDoneBtn').onclick = function() {
+                userData.exerciseDone = true;
+                localStorage.setItem('user', JSON.stringify(userData));
+                updateStatusDisplay();
+            };
+
+            document.getElementById('dietDoneBtn').onclick = function() {
+                userData.dietDone = true;
+                localStorage.setItem('user', JSON.stringify(userData));
+                updateStatusDisplay();
+            };
+
+            document.getElementById('resetStatusBtn').onclick = function() {
+                userData.exerciseDone = false;
+                userData.dietDone = false;
+                localStorage.setItem('user', JSON.stringify(userData));
+                updateStatusDisplay();
+            };
+
+            updateStatusDisplay();
+
             const userAvatar = document.getElementById('userAvatar');
             const profilePic = document.getElementById('profilePic');
             const avatarUpload = document.getElementById('avatarUpload');
@@ -599,12 +641,15 @@
                 }
             });
         });
-    </script>
-</body> // After successful login (replace with your actual login logic)
-</html> const userName = document.getElementById('login-name').value; // or get from server response
-        const userData = { name: userName };
+
+        // Example: Set initial status on login
+        const userName = document.getElementById('login-name').value;
+        const userData = { 
+            name: userName,
+            exerciseDone: false,
+            dietDone: false
+        };
         localStorage.setItem('user', JSON.stringify(userData));
-        window.location.href = 'dashboard.html';
     </script>
 </body>
 </html>

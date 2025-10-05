@@ -541,7 +541,7 @@
 
         // Example login form submission
         document.getElementById('login-form').addEventListener('submit', async function(e) {
-          e.preventDefault();
+          e.preventDefault
           const email = document.getElementById('login-email').value;
           const password = document.getElementById('login-password').value;
           const response = await fetch('http://localhost:3000/api/login', {
@@ -557,10 +557,6 @@
             alert(result.message || 'Login failed');
           }
         });
-
-        document.getElementById('dashboardLogo').addEventListener('click', function() {
-    window.location.href = 'dashboard.html';
-});
     </script>
 </body>
 </html>
