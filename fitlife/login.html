@@ -372,7 +372,7 @@
         </div>
         
         <div class="form-section">
-            <div class="logo">
+            <div class="logo" id="dashboardLogo" style="cursor:pointer;">
                 <h2>Fit<span>Life</span></h2>
             </div>
             
@@ -557,6 +557,10 @@
             alert(result.message || 'Login failed');
           }
         });
+
+        document.getElementById('dashboardLogo').addEventListener('click', function() {
+    window.location.href = 'dashboard.html';
+});
     </script>
 </body>
 </html>
