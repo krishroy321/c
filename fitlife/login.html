@@ -476,6 +476,37 @@
         </div>
     </div>
 
+    <!-- Firebase App (core) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script>
+  // Your Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyCYOzxUWAPd4ifIKUOXY0TQQvWJStRaeYk",
+    authDomain: "fitlife-8e768.firebaseapp.com",
+    projectId: "fitlife-8e768",
+    storageBucket: "fitlife-8e768.appspot.com",
+    messagingSenderId: "721770808033",
+    appId: "1:721770808033:web:adb64336eb674c3679eda0",
+    measurementId: "G-BLNN73G7VK"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+  // Google Sign-In Handler
+  async function handleGoogleSignIn() {
+    try {
+      await auth.signInWithPopup(googleProvider);
+      window.location.href = "dashboard.html";
+    } catch (error) {
+      // Optionally, show error in the UI (not alert)
+      // document.getElementById('login-error').textContent = error.message;
+    }
+  }
+</script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Splash animation
@@ -539,23 +570,41 @@
             });
         });
 
-        // Example login form submission
+        // LOGIN FORM
         document.getElementById('login-form').addEventListener('submit', async function(e) {
           e.preventDefault();
           const email = document.getElementById('login-email').value;
           const password = document.getElementById('login-password').value;
-          const response = await fetch('http://localhost:3000/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-          });
-          const result = await response.json();
-          if (result.success) {
-            alert('Login successful!');
-            // Redirect or save user info
-          } else {
-            alert(result.message || 'Login failed');
+          try {
+            await auth.signInWithEmailAndPassword(email, password);
+            window.location.href = "dashboard.html";
+          } catch (error) {
+            // Optionally show error in the UI
           }
+        });
+
+        // REGISTER FORM
+        document.getElementById('register-form').addEventListener('submit', async function(e) {
+          e.preventDefault();
+          const name = document.getElementById('register-name').value;
+          const email = document.getElementById('register-email').value;
+          const password = document.getElementById('register-password').value;
+          const confirm = document.getElementById('register-confirm').value;
+          if (password !== confirm || password.length < 8) {
+            return;
+          }
+          try {
+            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+            await userCredential.user.updateProfile({ displayName: name });
+            document.getElementById('login-tab').click();
+          } catch (error) {
+            // Optionally show error in the UI
+          }
+        });
+
+        // Social buttons
+        document.querySelectorAll('.social-btn.google').forEach(btn => {
+          btn.addEventListener('click', handleGoogleSignIn);
         });
     </script>
 </body>

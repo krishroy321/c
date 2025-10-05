@@ -402,52 +402,29 @@
         </main>
     </div>
 
+    <!-- Firebase SDKs and initialization -->
+    <!-- Firebase App (core) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <!-- Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
     <script>
-        // Logout function
-        function logout() {
-            localStorage.removeItem('user');
-            window.location.href = 'login.html'; // Redirect to login page
-        }
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCYOzxUWAPd4ifIKUOXY0TQQvWJStRaeYk",
+        authDomain: "fitlife-8e768.firebaseapp.com",
+        projectId: "fitlife-8e768",
+        storageBucket: "fitlife-8e768.appspot.com",
+        messagingSenderId: "721770808033",
+        appId: "1:721770808033:web:adb64336eb674c3679eda0",
+        measurementId: "G-BLNN73G7VK"
+      };
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if user is logged in (demo with localStorage)
-            const userData = JSON.parse(localStorage.getItem('user') || '{}');
-            // Remove or comment out the redirect:
-            // if (!userData.name) {
-            //     window.location.href = 'login.html'; // Redirect to login if no user
-            //     return;
-            // }
-            
-            // Set user info (fallback to default if not found)
-            document.getElementById('userName').textContent = userData.name || 'John Doe';
-            document.getElementById('userAvatar').textContent = (userData.name ? userData.name.charAt(0).toUpperCase() : 'J');
-            
-            // Mobile menu toggle
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
-            const mobileToggle = document.getElementById('mobileToggle');
-            
-            mobileToggle.addEventListener('click', function() {
-                sidebar.classList.toggle('active');
-                mainContent.classList.toggle('shifted');
-            });
-            
-            // Close sidebar on window resize (desktop)
-            window.addEventListener('resize', function() {
-                if (window.innerWidth > 768) {
-                    sidebar.classList.remove('active');
-                    mainContent.classList.remove('shifted');
-                }
-            });
-            
-            // Close sidebar when clicking outside (mobile)
-            document.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768 && sidebar.classList.contains('active') && !sidebar.contains(e.target) && !mobileToggle.contains(e.target)) {
-                    sidebar.classList.remove('active');
-                    mainContent.classList.remove('shifted');
-                }
-            });
-        });
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.firestore();
     </script>
 </body>
 </html>
